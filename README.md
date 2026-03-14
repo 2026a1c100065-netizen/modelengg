@@ -136,37 +136,7 @@ Behavior:
 ## Workflow Diagram (ASCII)
 
 ```text
-				 +------------------------------+
-				 |         configs/             |
-				 | data, features, model, train |
-				 +---------------+--------------+
-								 |
-								 v
-					+-----------------------+
-					|       train.py        |
-					| (uses src/* modules)  |
-					+-----------+-----------+
-								|
-								v
-	 +----------------------------------------------------------+
-	 |                   runs/run_001/                          |
-	 | model.joblib, metrics.json, params.json, predictions.csv |
-	 | holdout.csv                                               |
-	 +---------------------+----------------------+-------------+
-						   |                      |
-						   v                      v
-			   +-------------------+   +------------------------+
-			   |    evaluate.py    |   |       predict.py       |
-			   | holdout -> metrics|   | input CSV -> predictions|
-			   +---------+---------+   +-----------+------------+
-						 |                         |
-						 v                         v
-		runs/run_001/evaluation_metrics.json   predictions_inference.csv
-
-				 +---------------------------------------------+
-				 |               smoke_test.py                 |
-				 | auto-train if needed, then tiny inference   |
-				 +---------------------------------------------+
+![alt text](image-1.png)
 
 notebooks/*  -> exploration only
 src/*        -> reusable production logic
@@ -175,56 +145,7 @@ reports/*    -> human-readable findings and decisions
 
 ## Weekly Course Rhythm (ASCII)
 
-```text
-Week N Start
-	|
-	v
-+-----------------------------+
-| notebooks/01_eda.ipynb      |
-| Inspect data quality, drift |
-+-------------+---------------+
-			  |
-			  v
-+-----------------------------+
-| notebooks/02_feature_*      |
-| Try feature ideas quickly   |
-+-------------+---------------+
-			  |
-			  v
-+-----------------------------+
-| Move stable logic to src/*  |
-| features/, models/, eval/   |
-+-------------+---------------+
-			  |
-			  v
-+-----------------------------+
-| Update configs/*            |
-| feature set + model params  |
-+-------------+---------------+
-			  |
-			  v
-+-----------------------------+
-| Run train.py                |
-| Create new runs/run_00X     |
-+-------------+---------------+
-			  |
-			  v
-+-----------------------------+
-| Run evaluate.py             |
-| Compare metrics vs baseline |
-+-------------+---------------+
-			  |
-			  v
-+-----------------------------+
-| Update runs/summary.csv     |
-| + reports/weekly/week_0X.md |
-+-------------+---------------+
-			  |
-			  v
-	  Decide next experiment
-			  |
-			  +------> Repeat loop
-```
+![alt text](image.png)
 
 ## Reproducibility Checklist
 
