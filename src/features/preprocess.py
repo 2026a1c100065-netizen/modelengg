@@ -10,6 +10,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 
 def build_preprocessor(X: pd.DataFrame, scale_numeric: bool = True) -> ColumnTransformer:
+    # Infer feature groups directly from dtypes to avoid hard-coded column lists.
     numeric_features = X.select_dtypes(include=["number", "bool"]).columns.tolist()
     categorical_features = [c for c in X.columns if c not in numeric_features]
 
@@ -20,6 +21,7 @@ def build_preprocessor(X: pd.DataFrame, scale_numeric: bool = True) -> ColumnTra
     categorical_pipeline = Pipeline(
         steps=[
             ("imputer", SimpleImputer(strategy="most_frequent")),
+            # Ignore unseen categories at inference to make the pipeline robust to drift.
             ("onehot", OneHotEncoder(handle_unknown="ignore")),
         ]
     )

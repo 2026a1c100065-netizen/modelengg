@@ -15,6 +15,7 @@ def classification_metrics(y_true, y_pred, y_prob=None) -> dict:
     }
     if y_prob is not None:
         unique = np.unique(y_true)
+        # ROC-AUC is only defined for binary targets in this helper.
         if len(unique) == 2:
             out["roc_auc"] = float(roc_auc_score(y_true, y_prob))
     return out

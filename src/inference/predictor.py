@@ -16,6 +16,7 @@ def load_model(run_dir: str | Path, model_file: str = "model.joblib"):
 def predict_dataframe(model, X: pd.DataFrame) -> pd.DataFrame:
     preds = model.predict(X)
     out = pd.DataFrame({"prediction": preds})
+    # Include positive-class score for ranking and threshold tuning workflows.
     if hasattr(model, "predict_proba"):
         out["score"] = model.predict_proba(X)[:, 1]
     return out

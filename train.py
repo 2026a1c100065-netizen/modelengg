@@ -21,6 +21,7 @@ def _ensure_training_data(data_cfg: dict) -> pd.DataFrame:
     if dataset_path.exists():
         return pd.read_csv(dataset_path)
 
+    # Bootstrap a local demo dataset so the training workflow runs out-of-the-box.
     dataset_path.parent.mkdir(parents=True, exist_ok=True)
     data = load_breast_cancer(as_frame=True)
     df = data.frame.copy()
@@ -88,6 +89,7 @@ def main() -> None:
     pred_df = X_test.copy()
     pred_df["y_true"] = y_test.values
     pred_df["y_pred"] = y_pred
+    # Persist probabilities when available for thresholding and calibration checks.
     if y_prob is not None:
         pred_df["y_score"] = y_prob
     pred_df.to_csv(run_dir / predictions_file, index=False)
@@ -105,6 +107,7 @@ def main() -> None:
         "roc_auc": metrics.get("roc_auc", ""),
         "notes": "baseline run",
     }
+    # Append instead of overwrite to keep a lightweight experiment ledger.
     if summary_path.exists():
         summary_df = pd.read_csv(summary_path)
         summary_df = pd.concat([summary_df, pd.DataFrame([summary_row])], ignore_index=True)
