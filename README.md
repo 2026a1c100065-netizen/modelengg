@@ -133,7 +133,7 @@ Behavior:
 - Loads `runs/run_001/holdout.csv`, predicts on a small sample, and validates expected output columns.
 - Prints pass/fail sanity result.
 
-## Workflow Diagram (ASCII)
+## Workflow Diagram
 
 ![alt text](image-1.png)
 ```text
@@ -142,7 +142,7 @@ src/*        -> reusable production logic
 reports/*    -> human-readable findings and decisions
 ```
 
-## Weekly Course Rhythm (ASCII)
+## Weekly Course Rhythm
 
 ![alt text](image.png)
 
